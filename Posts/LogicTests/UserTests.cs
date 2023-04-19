@@ -1,7 +1,6 @@
 ﻿using Logic;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
-using System.Collections.Generic;
 
 namespace LogicTests
 {
@@ -99,6 +98,13 @@ namespace LogicTests
         }
 
         [TestMethod]
+        public void AuthManagerLogsInitialValueTest()
+        {
+            var authManager = new AuthManager();
+            Assert.AreEqual(0, authManager.Logs.Count);
+        }
+
+        [TestMethod]
         public void AuthManagerSignInLogTest()
         {
             var date1 = DateTime.Now.AddHours(-6);
@@ -128,13 +134,33 @@ namespace LogicTests
 
             var logs = authManager.Logs;
 
-            Assert.AreEqual(6, logs.Length);
+            Assert.AreEqual(6, logs.Count);
             Assert.AreEqual(user1.Username, logs[0].Username);
-            Assert.AreEqual(Actions.SIGN_IN, logs[0].Action);
-            Assert.AreE
-            Assert.AreEqual(user1.Username, logs[1].Username);
+            Assert.AreEqual(Logic.Action.SIGN_IN, logs[0].Action);
+            Assert.AreEqual(date1.ToLongDateString(), logs[0].Date.ToLongDateString());
 
-            
+            Assert.AreEqual(user1.Username, logs[1].Username);
+            Assert.AreEqual(Logic.Action.SIGN_OUT, logs[1].Action);
+            Assert.AreEqual(date2.ToLongDateString(), logs[1].Date.ToLongDateString());
+
+            Assert.AreEqual(user2.Username, logs[2].Username);
+            Assert.AreEqual(Logic.Action.SIGN_IN, logs[2].Action);
+            Assert.AreEqual(date3.ToLongDateString(), logs[2].Date.ToLongDateString());
+
+            Assert.AreEqual(user2.Username, logs[3].Username);
+            Assert.AreEqual(Logic.Action.SIGN_OUT, logs[3].Action);
+            Assert.AreEqual(date4.ToLongDateString(), logs[3].Date.ToLongDateString());
+
+            Assert.AreEqual(user3.Username, logs[4].Username);
+            Assert.AreEqual(Logic.Action.SIGN_IN, logs[4].Action);
+            Assert.AreEqual(date5.ToLongDateString(), logs[4].Date.ToLongDateString());
+
+            Assert.AreEqual(user3.Username, logs[5].Username);
+            Assert.AreEqual(Logic.Action.SIGN_OUT, logs[5].Action);
+            Assert.AreEqual(date6.ToLongDateString(), logs[5].Date.ToLongDateString());
+
+
+
         }
 
 

@@ -41,8 +41,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Action.cs" />
     <Compile Include="AuthManager.cs" />
     <Compile Include="DateTimeProvider.cs" />
+    <Compile Include="Log.cs" />
     <Compile Include="PostsUser.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

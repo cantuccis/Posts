@@ -59,5 +59,16 @@ namespace LogicTests
             };
             Assert.AreEqual(user.ProfilePic, "somepic.png");
         }
+
+        [TestMethod]
+        public void DefaultProfilePicTest()
+        {
+            var user = new PostsUser
+            {
+                Username = "Someuser",
+            };
+
+            Assert.AreEqual(user.ProfilePic, "default.png");
+        }
     }
 }

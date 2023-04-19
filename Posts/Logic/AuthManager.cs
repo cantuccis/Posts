@@ -13,7 +13,7 @@ namespace Logic
         public DateTime LastSignIn { get; private set; }
 
         private PostsUser CurrentUser { get; set; }
-        public List<Log> Logs { get => logs; set => logs = value; }
+        public List<Log> Logs { get => new List<Log>(logs); private set => logs = value; }
 
         public AuthManager()
         {
@@ -35,7 +35,7 @@ namespace Logic
 
         private void LogAction(Action action)
         {
-            Logs.Add(new Log(CurrentUser.Username, action, DateTimeProvider.Now));
+            logs.Add(new Log(CurrentUser.Username, action, DateTimeProvider.Now));
         }
     }
 }

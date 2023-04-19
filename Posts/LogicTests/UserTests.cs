@@ -174,8 +174,8 @@ namespace LogicTests
 
             logs.Add(new Log("Someuser", Logic.Action.SIGN_OUT, DateTime.Now));
 
-            Assert.AreEqual(1, authManager.Logs);
-            Assert.AreEqual(2, logs);
+            Assert.AreEqual(1, authManager.Logs.Count);
+            Assert.AreEqual(2, logs.Count);
         }
 
     }

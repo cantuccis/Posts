@@ -55,7 +55,6 @@ namespace LogicTests
         [TestMethod]
         public void AuthManagerInitialValuesTest()
         {
-            var user = new PostsUser("Someuser");
             var authManager = new AuthManager();
 
             Assert.IsFalse(authManager.IsUserSignedIn);
@@ -65,7 +64,7 @@ namespace LogicTests
         public void AuthManagerSignInTest()
         {
             var someDate = DateTime.Now;
-            DateTimeProvider.Now = DateTime.Now;
+            DateTimeProvider.Now = someDate;
             var user = new PostsUser("Someuser");
             var authManager = new AuthManager();
 
@@ -80,7 +79,7 @@ namespace LogicTests
         public void AuthManagerSignOutTest()
         {
             var someDate = DateTime.Now;
-            DateTimeProvider.Now = DateTime.Now;
+            DateTimeProvider.Now = someDate;
             var user = new PostsUser("Someuser");
             var authManager = new AuthManager();
 

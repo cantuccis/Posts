@@ -159,10 +159,24 @@ namespace LogicTests
             Assert.AreEqual(Logic.Action.SIGN_OUT, logs[5].Action);
             Assert.AreEqual(date6.ToLongDateString(), logs[5].Date.ToLongDateString());
 
-
-
         }
 
+        [TestMethod]
+        public void LogsInternalMutabilityTest()
+        {
+            var authManager = new AuthManager();
+            var user = new PostsUser("Someuser");
+            authManager.SignIn(user);
+
+            var logs = authManager.Logs;
+
+            Assert.AreEqual(1, logs.Count);
+
+            logs.Add(new Log("Someuser", Logic.Action.SIGN_OUT, DateTime.Now));
+
+            Assert.AreEqual(1, authManager.Logs);
+            Assert.AreEqual(2, logs);
+        }
 
     }
 }

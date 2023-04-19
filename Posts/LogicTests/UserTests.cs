@@ -10,10 +10,7 @@ namespace LogicTests
         [TestMethod]
         public void CreateUserWithUsernameObjectTest()
         {
-            var user = new PostsUser
-            {
-                Username = "Someuser"
-            };
+            var user = new PostsUser("Someuser");
 
             Assert.IsNotNull(user);
             Assert.AreEqual(user.Username, "Someuser", "Username should be Someuser");
@@ -23,52 +20,84 @@ namespace LogicTests
         [ExpectedException(typeof(ArgumentException), "Username must have at least 4 characters long")]
         public void UsernameShoudBeAtLeast4CharactersLongTest()
         {
-            var user = new PostsUser
-            {
-                Username = "aaa"
-            };
+            var user = new PostsUser("aaa");
         }
 
         [TestMethod]
         [ExpectedException(typeof(ArgumentException), "Username cannot be empty")]
         public void UsernameCannotBeEmptyTest()
         {
-            var user = new PostsUser
-            {
-                Username = ""
-            };
+            var user = new PostsUser("");
         }
 
         [TestMethod]
         [ExpectedException(typeof(ArgumentException), "Username cannot be empty")]
         public void UsernameCannotBeNullTest()
         {
-            var user = new PostsUser
-            {
-                Username = null
-            };
+            var user = new PostsUser(null);
         }
 
         [TestMethod]
         public void SetProfilePicTest()
         {
-            var user = new PostsUser
-            {
-                Username = "Someuser",
-                ProfilePic = "somepic.png",
-            };
+            var user = new PostsUser("Someuser");
+            user.ProfilePic = "somepic.png";
             Assert.AreEqual(user.ProfilePic, "somepic.png");
         }
 
         [TestMethod]
         public void DefaultProfilePicTest()
         {
-            var user = new PostsUser
-            {
-                Username = "Someuser",
-            };
-
+            var user = new PostsUser("Someuser");
             Assert.AreEqual(user.ProfilePic, "default.png");
         }
+
+        [TestMethod]
+        public void AuthManagerInitialValuesTest()
+        {
+            var user = new PostsUser("Someuser");
+            var authManager = new AuthManager();
+
+            Assert.IsFalse(authManager.IsUserSignedIn);
+        }
+
+        [TestMethod]
+        public void AuthManagerSignInTest()
+        {
+            var someDate = DateTime.Now;
+            DateTimeProvider.Now = DateTime.Now;
+            var user = new PostsUser("Someuser");
+            var authManager = new AuthManager();
+
+            authManager.SignIn(user);
+
+            Assert.IsTrue(authManager.IsUserSignedIn);
+            Assert.AreEqual(authManager.CurrentUserName, user.Username);
+            Assert.AreEqual(authManager.LastSignIn.ToLongDateString(), someDate.ToLongDateString());
+        }
+
+        [TestMethod]
+        public void AuthManagerSignOutTest()
+        {
+            var someDate = DateTime.Now;
+            DateTimeProvider.Now = DateTime.Now;
+            var user = new PostsUser("Someuser");
+            var authManager = new AuthManager();
+
+            authManager.SignIn(user);
+
+            Assert.IsTrue(authManager.IsUserSignedIn);
+            Assert.AreEqual(authManager.CurrentUserName, user.Username);
+            Assert.AreEqual(authManager.LastSignIn.ToLongDateString(), someDate.ToLongDateString());
+
+            authManager.SignOut();
+
+            Assert.IsFalse(authManager.IsUserSignedIn);
+            Assert.AreEqual(authManager.CurrentUserName, null);
+            Assert.AreEqual(authManager.LastSignIn.ToLongDateString(), someDate.ToLongDateString());
+        }
+
+
+
     }
 }

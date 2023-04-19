@@ -7,10 +7,15 @@ namespace Logic
         private string username;
         private string profilePic = "default.png";
 
+        public PostsUser(string username)
+        {
+            Username = username;
+        }
+
         public string Username
         {
             get => username;
-            set
+            private set
             {
                 if (value == null || value.Length == 0)
                 {
